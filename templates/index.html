@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+<link href="https://cdn.jsdelivr.net/npm/prismjs/themes/prism.css" rel="stylesheet" />
+<script src="https://cdn.jsdelivr.net/npm/prismjs/prism.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/prismjs/components/prism-sql.min.js"></script>
+
+<head>
+    <title>Nectar AI HR</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+
+<body>
+<div class="container">
+    <h1>Nectar AI HR</h1>
+
+    <form action="/query" method="post">
+        <textarea name="user_query" placeholder="Ask something..."></textarea>
+        <button type="submit">Ask</button>
+    </form>
+
+    {% if answer %}
+    <div class="section">
+        <h3>AI Answer</h3>
+        <!-- <p>{{ answer }}</p> -->
+         <div id="md-output"></div>
+
+        <script>
+            const markdown = `{{ answer | safe }}`;
+            document.getElementById("md-output").innerHTML = marked.parse(markdown);
+        </script>
+    </div>
+    {% endif %}
+
+    {% if sql %}
+    <div class="section">
+        <h3>Generated SQL</h3>
+        <div id = "sq-output">
+        <pre><code class="language-sql">{{ sql }}</code></pre>
+        </div>
+    </div>
+    {% endif %}
+
+    {% if error %}
+    <div class="error">{{ error }}</div>
+    {% endif %}
+
+
+</div>
+
+</body>
+</html>
